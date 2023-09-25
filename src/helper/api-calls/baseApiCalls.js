@@ -59,7 +59,7 @@ const makeRequest = async(config, retry) =>
 		}
 		catch (error)
 		{
-			console.log(error);
+			alert('Error while making api calls')
 		}
 	}
 };

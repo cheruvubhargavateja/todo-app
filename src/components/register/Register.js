@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { login } from '../../store/authSlice';
 import { BaseService } from '../../helper/api-calls/baseApiCalls';
 
 const Register = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const dispatch = useDispatch();
 
     const handleSubmit = async (e) => { 
         e.preventDefault();
@@ -18,8 +21,16 @@ const Register = () => {
         true
         )
 
-        const data = await response.json();
-        console.log(data);
+        if(response.status === 200)
+        {
+            const data = await response.json();
+            dispatch(login({
+                name: name,
+                email: email,
+                accessToken: data.accessToken,
+                isAuthenticated: true
+            }))
+        }
 
         setName('')
         setEmail('')
